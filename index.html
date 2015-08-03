@@ -8,6 +8,13 @@
 <script>
 var scope = 'hello/';
 var registration;
+'use strict';
+
+var API_KEY = '';
+var GCM_ENDPOINT = 'https://android.googleapis.com/gcm/send';
+
+var curlCommandDiv = document.querySelector('.js-curl-command');
+var isPushEnabled = false;
 
 function register() {
     
@@ -27,10 +34,25 @@ function register() {
    if ('serviceWorker' in navigator) {
               navigator.serviceWorker.register('service-worker.js').then(function(registration) {
                   if ('pushManager' in registration) {
-                        console.log("ready resolved2");
-                      } else {
-                        console.log("ready resolved3");
-                      }
+                    
+                   // registration.pushManager.getSubscription()  
+      //.then(function(pushSubscription) {
+      //                document.getElementById("register").disabled = true;
+      //              // Keep your server in sync with the latest subscriptionId
+      //               sendSubscriptionToServer(pushSubscription);
+                                  
+    //  });
+   
+                    registration.pushManager.subscribe({userVisibleOnly: true}).then(
+      function(pushSubscription) { console.log("ready resolved3");
+      
+      document.getElementById("register").disabled = true;
+       // Keep your server in sync with the latest subscriptionId
+       sendSubscriptionToServer(pushSubscription);
+      
+      }); 
+                  }       
+                     
               });
    }
    return;
@@ -54,7 +76,67 @@ function register() {
             }
         */
 }
+function sendSubscriptionToServer(subscription) {
+  // TODO: Send the subscription.endpoint
+  // to your server and save it to send a
+  // push message at a later date
+  //
+  // For compatibly of Chrome 43, get the endpoint via
 
+ endpointWorkaround(subscription)
+
+
+  var mergedEndpoint = endpointWorkaround(subscription);
+
+  // This is just for demo purposes / an easy to test by
+  // generating the appropriate cURL command
+ showCurlCommand(mergedEndpoint);
+}
+
+
+
+
+// This method handles the removal of subscriptionId
+// in Chrome 44 by concatenating the subscription Id
+// to the subscription endpoint
+function endpointWorkaround(subscription) {
+  console.log('hi');
+  // Make sure we only mess with GCM
+  if (subscription.endpoint.indexOf('https://android.googleapis.com/gcm/send') !== 0) {console.log('hi1');
+    return subscription.endpoint;
+  }
+
+  var mergedEndpoint = subscription.endpoint;
+  // Chrome 42 + 43 will not have the subscriptionId attached
+  // to the endpoint.
+  if (subscription.subscriptionId &&
+    subscription.endpoint.indexOf(subscription.subscriptionId) === -1) {
+    // Handle version 42 where you have separate subId and Endpoint
+    mergedEndpoint = subscription.endpoint + '/' +
+      subscription.subscriptionId;
+  }
+  return mergedEndpoint;
+}
+function showCurlCommand(mergedEndpoint) {
+  // The curl command to trigger a push message straight from GCM
+  if (mergedEndpoint.indexOf(GCM_ENDPOINT) !== 0) {
+    window.Demo.debug.log('This browser isn\'t currently ' +
+      'supported for this demo');
+    return;
+  }
+
+  var endpointSections = mergedEndpoint.split('/');
+  var subscriptionId = endpointSections[endpointSections.length - 1];
+
+  var curlCommand = 'curl --header "Authorization: key=' + API_KEY +
+    '" --header Content-Type:"application/json" ' + GCM_ENDPOINT +
+    ' -d "{\\"registration_ids\\":[\\"' + subscriptionId + '\\"]}"';
+ 
+ document.getElementById("curl").value = curlCommand;
+ 
+ console.log(curlCommand);
+ // curlCommandDiv.textContent = curlCommand;
+}
 function unregister() {
   registration.unregister()
     .then(function() {
@@ -195,8 +277,8 @@ function initialiseState()
     
 </script>
 <body>
-    
-<button onclick="register()">Register</button>
+  
+<button id="register" onclick="register()">Register</button>
 <button onclick="unregister()">Unregister</button>
 
 <p>Some nice places to visit:
@@ -207,6 +289,7 @@ function initialiseState()
 <li><button class="js-push-button" disabled>
 Enable Push Messages
 </button></li>
+<textarea id="curl" widht="300" height="250"> </textarea>
 </ul>
 </body></html>
 
