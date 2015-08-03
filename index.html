@@ -245,7 +245,7 @@ function sendSubscription(subscriptionObject) {
   xhr.send(formData);
 }
 
-function requestPushPermission() {
+function requestPushPermission() { console.log('Hi');
   navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
     serviceWorkerRegistration.pushManager.subscribe({userVisibleOnly: true})
       .then(function(pushSubscription) {
