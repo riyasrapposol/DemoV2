@@ -1,0 +1,212 @@
+<!doctype html>
+<html>
+<head>
+  <title>Simple Push Demo</title>
+  <link rel="manifest" href="manifest.json">
+ </head>
+
+<script>
+var scope = 'hello/';
+var registration;
+
+function register() {
+    
+  /*  if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js').then(function(registration) {
+    if ('pushManager' in registration) {
+      console.log("ready resolved2");
+    } else {
+      console.log("ready resolved3");
+    }
+  });
+} else {
+  // The browser doesn't support service workers
+  console.log("ready resolved4");
+}*/
+   
+   if ('serviceWorker' in navigator) {
+              navigator.serviceWorker.register('service-worker.js').then(function(registration) {
+                  if ('pushManager' in registration) {
+                        console.log("ready resolved2");
+                      } else {
+                        console.log("ready resolved3");
+                      }
+              });
+   }
+   return;
+    /*else {
+        console.warn('Service workers aren\'t supported in this browser.');
+        }
+        if ('serviceWorker' in navigator) {
+              navigator.serviceWorker.register('service-worker.js',{ scope: '/' }).then(function(registration) {
+                  console.log("ready resolved1");
+                if ('pushManager' in registration) {
+                  // The service worker supports push
+                    console.log("ready resolved2");
+                } else {
+                  // The service worker doesn't support push
+                    console.log("ready resolved3");
+                }
+              });
+            } else {
+              // The browser doesn't support service workers
+                console.log("ready resolved4");
+            }
+        */
+}
+
+function unregister() {
+  registration.unregister()
+    .then(function() {
+      console.log('unregistered');
+    });
+}
+
+// Once the service worker is registered set the initial state
+function initialiseState() 
+{
+      
+        // Are Notifications supported in the service worker?
+        if (!('showNotification' in ServiceWorkerRegistration.prototype)) {
+        console.log('Notifications aren\'t supported.');
+        return;
+        }
+       
+        // Check the current Notification permission.
+        // If its denied, it's a permanent block until the
+        // user changes the permission
+        if (Notification.permission === 'denied')
+        {
+          console.log('The user has blocked notifications.');
+          return;
+        }
+       
+        // Check if push messaging is supported
+        if (!('PushManager' in window))
+        {
+          console.warn('Push messaging isn\'t supported.');
+          return;
+        }
+        console.log('test4');
+     
+        navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {console.log('test5');
+      // Check if this service worker supports push
+      if (!serviceWorkerRegistration.pushManager) {
+        showError('Ooops Push Isn\'t Supported', 'This is most likely ' +
+          'down to the current browser doesn\'t have support for push. ' +
+          'Try Chrome M41.');
+        return;
+      }
+
+      // Check if we have permission for push messages already
+     /* serviceWorkerRegistration.pushManager.hasPermission().then(
+        function(pushPermissionStatus) {
+          // Once we have a service worker, and checked permission,
+          // enable the buttons
+          var buttonContainer = document.querySelector('.button-container');
+          buttonContainer.style.display = 'block';
+
+          // If we don't have permission then set the UI accordingly
+          if (pushPermissionStatus !== 'granted') {
+            changeState(STATE_NOTIFICATION_PERMISSION);
+            return;
+          }
+
+          // We have permission, so let's update the subscription
+          // just to be safe
+         serviceWorkerRegistration.pushManager.getSubscription().then(
+            function(pushSubscription) {
+              // Check if we have an existing pushSubscription
+              if (pushSubscription) {
+                sendSubscription(pushSubscription);
+                changeState(STATE_ALLOW_PUSH_SEND);
+              } else {
+                changeState(STATE_NOTIFICATION_PERMISSION);
+              }
+            });
+        });*/
+    });
+       
+       
+       
+        if (navigator.serviceWorker.ready) 
+        {
+            console.log("ready resolved");
+          
+          /*  navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) 
+            {
+              console.log("ready resolved1");
+              // Check if this service worker supports push
+              if (!serviceWorkerRegistration.pushManager)
+              {*/
+               /* showError('Ooops Push Isn\'t Supported', 'This is most likely ' +
+                'down to the current browser doesn\'t have support for push. ' +
+                'Try Chrome M41.');*/
+            /*    console.log("ready resolved2");
+                return;
+              }
+            });*/
+        }
+        else
+        {
+          console.log("ready not");
+          
+        }
+        }
+        // We need the service worker registration to check for a subscription
+      /*  navigator.serviceWorker.ready.then(
+                 function(serviceWorkerRegistration) 
+                  {
+                     console.log('test5');
+                      // Do we already have a push message subscription?
+                      serviceWorkerRegistration.pushManager.getSubscription()
+                      .then(
+                            function(subscription) 
+                            {
+                                                  // Enable any UI which subscribes / unsubscribes from
+                                                  // push messages.
+                                                  console.log('test6');
+                                                  var pushButton = document.querySelector('.js-push-button');
+                                                  pushButton.disabled = false;
+                                                  if (!subscription) 
+                                                  {
+                                                    // We aren't subscribed to push, so set UI
+                                                    // to allow the user to enable push
+                                                    console.log('test4');
+                                                    return;
+                                                  }
+                                                  console.log('test5');
+                                                  // Keep your server in sync with the latest subscriptionId
+                                                  sendSubscriptionToServer(subscription);
+                                                  // Set your UI to show they have subscribed for
+                                                  // push messages
+                                                  pushButton.textContent = 'Disable Push Messages';
+                                                  isPushEnabled = true;
+                              }
+                             function(r) {
+      console.log('Serice Workder Ready: ');
+      //registration = r;
+      //console.log(registration);
+    } )
+        .catch(function(err) {
+        console.warn('Error during getSubscription()', err);
+        });
+        });*/
+    
+</script>
+<body>
+    
+<button onclick="register()">Register</button>
+<button onclick="unregister()">Unregister</button>
+
+<p>Some nice places to visit:
+
+<ul>
+<li><a href="hello/world">world</a>
+<li><a href="hello/Cleveland">Cleveland</a></li>
+<li><button class="js-push-button" disabled>
+Enable Push Messages
+</button></li>
+</ul>
+</body></html>
+
