@@ -6,6 +6,7 @@
  </head>
 
 <script>
+var PUSH_SERVER_URL = window.location.origin;
 var scope = 'hello/';
 var registration;
 'use strict';
@@ -76,24 +77,75 @@ function register() {
             }
         */
 }
-function sendSubscriptionToServer(subscription) {
+function sendSubscriptionToServer(subscriptionObject) {
   // TODO: Send the subscription.endpoint
   // to your server and save it to send a
   // push message at a later date
   //
   // For compatibly of Chrome 43, get the endpoint via
 
- endpointWorkaround(subscription)
+ //endpointWorkaround(subscription)
+  var endpoint = subscriptionObject.endpoint;
+  var subscriptionId = subscriptionObject.subscriptionId;
+  console.log('sendRegistration endpoint = ', endpoint);
+  console.log('sendRegistration subscriptionId = ', subscriptionId);
+  var formData = new FormData();
+  formData.append('registration', subscriptionId);
+  formData.append('endpoint', endpoint);
 
+  var xhr = new XMLHttpRequest();
+  xhr.onload = function() {
+    // The API for our App Engine returns a success value
+    if (!JSON.parse(xhr.response).success) {
+      return;
+    }
 
-  var mergedEndpoint = endpointWorkaround(subscription);
+   // changeState(STATE_ALLOW_PUSH_SEND);
+  };
+
+  xhr.onerror = xhr.onabort = function() {
+    window.alert('We were unable to register with our server. ' +
+      'Please check your internet connection and try again.');
+  };
+
+  xhr.open('POST', PUSH_SERVER_URL + '/register_track');
+  xhr.send(formData);
+
+  //var mergedEndpoint = endpointWorkaround(subscription);
 
   // This is just for demo purposes / an easy to test by
   // generating the appropriate cURL command
- showCurlCommand(mergedEndpoint);
+ //showCurlCommand(mergedEndpoint);
 }
 
+function askServerToSendMessage() {
+  var title = 'Test';
+  var message = 'Test2';
 
+  var formData = new FormData();
+  formData.append('title', title);
+  formData.append('message', message);
+
+  var xhr = new XMLHttpRequest();
+  xhr.onload = function() {
+    // The API for our App Engine returns a success value
+    if (!JSON.parse(xhr.response).success) {
+      window.alert('We were unable to request a push message ' +
+        'due to an error with GCM. You may need to try again. ' +
+        'Otherwise. Eek. Raise a bug or tweet @gauntface.');
+      return;
+    }
+  };
+
+  xhr.onerror = xhr.onabort = function() {
+    window.alert('We were unable to request a push message ' +
+      'from our server. Please check your internet ' +
+      'connection and try again.');
+  };
+
+  xhr.open('POST', PUSH_SERVER_URL + '/push');
+  xhr.send(formData);
+}
 
 
 // This method handles the removal of subscriptionId
@@ -143,6 +195,21 @@ function unregister() {
       console.log('unregistered');
     });
 }
+
+
+window.addEventListener('load', function() {
+  
+ // document.getElementById("myBtn").addEventListener('click', requestNotificationPermission);
+
+ // pushBtn.addEventListener('click', requestPushPermission);
+
+  document.getElementById("pushbutton").addEventListener('click', askServerToSendMessage);
+
+//  revokePushBtn.addEventListener('click', revokePushSubscription);
+});
+
+
+
 
 // Once the service worker is registered set the initial state
 function initialiseState() 
@@ -286,7 +353,7 @@ function initialiseState()
 <ul>
 <li><a href="hello/world">world</a>
 <li><a href="hello/Cleveland">Cleveland</a></li>
-<li><button class="js-push-button" disabled>
+<li><button id="pushbutton"> Push</button>
 Enable Push Messages
 </button></li>
 <textarea id="curl" widht="300" height="250"> </textarea>
