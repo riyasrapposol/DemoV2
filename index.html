@@ -300,18 +300,18 @@ window.addEventListener('load', function() {
     }
 
     // Check if we have permission for push messages already
-    serviceWorkerRegistration.pushManager.hasPermission().then(
-      function(pushPermissionStatus) {
+   // serviceWorkerRegistration.pushManager.hasPermission().then(
+   //   function(pushPermissionStatus) {
         // Once we have a service worker, and checked permission,
         // enable the buttons
         var buttonContainer = document.querySelector('.button-container');
         buttonContainer.style.display = 'block';
 
         // If we don't have permission then set the UI accordingly
-        if (pushPermissionStatus !== 'granted') {
-          changeState(STATE_NOTIFICATION_PERMISSION);
-          return;
-        }
+      //  if (pushPermissionStatus !== 'granted') {
+      //    changeState(STATE_NOTIFICATION_PERMISSION);
+      //    return;
+      //  }
 
         // We have permission, so let's update the subscription
         // just to be safe
@@ -324,7 +324,7 @@ window.addEventListener('load', function() {
             } else {
               changeState(STATE_NOTIFICATION_PERMISSION);
             }
-          });
+        //  });
       });
   });
 
