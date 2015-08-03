@@ -127,7 +127,7 @@ function askServerToSendMessage() {
   formData.append('message', message);
 
   var xhr = new XMLHttpRequest();
-  xhr.onload = function() {
+//  xhr.onload = function() {
     // The API for our App Engine returns a success value
  //   if (!JSON.parse(xhr.response).success) {
    //   window.alert('We were unable to request a push message ' +
@@ -135,7 +135,7 @@ function askServerToSendMessage() {
   //      'Otherwise. Eek. Raise a bug or tweet @gauntface.');
   //    return;
  //   }
-  };
+//  };
 
   xhr.onerror = xhr.onabort = function() {
     window.alert('We were unable to request a push message ' +
