@@ -96,9 +96,9 @@ function sendSubscriptionToServer(subscriptionObject) {
   var xhr = new XMLHttpRequest();
   xhr.onload = function() {
     // The API for our App Engine returns a success value
-    if (!JSON.parse(xhr.response).success) {
-      return;
-    }
+  //  if (!JSON.parse(xhr.response).success) {
+  //    return;
+  //  }
 
    // changeState(STATE_ALLOW_PUSH_SEND);
   };
@@ -129,12 +129,12 @@ function askServerToSendMessage() {
   var xhr = new XMLHttpRequest();
   xhr.onload = function() {
     // The API for our App Engine returns a success value
-    if (!JSON.parse(xhr.response).success) {
-      window.alert('We were unable to request a push message ' +
-        'due to an error with GCM. You may need to try again. ' +
-        'Otherwise. Eek. Raise a bug or tweet @gauntface.');
-      return;
-    }
+ //   if (!JSON.parse(xhr.response).success) {
+   //   window.alert('We were unable to request a push message ' +
+   //     'due to an error with GCM. You may need to try again. ' +
+  //      'Otherwise. Eek. Raise a bug or tweet @gauntface.');
+  //    return;
+ //   }
   };
 
   xhr.onerror = xhr.onabort = function() {
