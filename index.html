@@ -249,6 +249,7 @@ function requestPushPermission() {
   navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
     serviceWorkerRegistration.pushManager.subscribe({userVisibleOnly: true})
       .then(function(pushSubscription) {
+       console.log('Hi');
         sendSubscription(pushSubscription);
       })
       .catch(function(e) {
