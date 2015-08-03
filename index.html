@@ -247,7 +247,7 @@ function sendSubscription(subscriptionObject) {
 
 function requestPushPermission() {
   navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
-    serviceWorkerRegistration.pushManager.subscribe()
+    serviceWorkerRegistration.pushManager.subscribe({userVisibleOnly: true})
       .then(function(pushSubscription) {
         sendSubscription(pushSubscription);
       })
