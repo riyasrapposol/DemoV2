@@ -352,7 +352,7 @@ window.addEventListener('UIReady', function() {
 
   // Check that service workers are supported
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js', {
+    navigator.serviceWorker.register('/er.js', {
       scope: './'
     })
     .then(initialiseState);
