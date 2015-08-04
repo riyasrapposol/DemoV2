@@ -156,14 +156,14 @@ function requestPushPermission() {
                                   
     //  });
    
-                    registration.pushManager.subscribe({userVisibleOnly: true}).then(
-      function(pushSubscription) { console.log("ready resolved3");
+                    registration.pushManager.subscribe({userVisibleOnly: true});
+      //function(pushSubscription) { console.log("ready resolved3");
       
     //  document.getElementById("register").disabled = true;
        // Keep your server in sync with the latest subscriptionId
       // sendSubscriptionToServer(pushSubscription);
       
-      }); 
+     // }); 
                   }       
                      
               });
@@ -175,8 +175,8 @@ window.addEventListener('load', function() {
   prepareViews();
   notificationBtn.addEventListener('click', requestNotificationPermission);
   pushBtn.addEventListener('click', requestPushPermission);
-  requestPushBtn.addEventListener('click', askServerToSendMessage);
-  revokePushBtn.addEventListener('click', revokePushSubscription);
+ // requestPushBtn.addEventListener('click', askServerToSendMessage);
+ // revokePushBtn.addEventListener('click', revokePushSubscription);
 });  
   
   </script>
