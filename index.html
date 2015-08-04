@@ -155,9 +155,9 @@ function register() {
   console.log("ready resolved4");
 }*/
    alert();
-   if ('serviceWorker' in navigator) {
-              navigator.serviceWorker.register('service-worker.js').then(function(registration) {
-                  if ('pushManager' in registration) {
+   //if ('serviceWorker' in navigator) {
+   //           navigator.serviceWorker.register('service-worker.js').then(function(registration) {
+   //               if ('pushManager' in registration) {
                     
                    // registration.pushManager.getSubscription()  
       //.then(function(pushSubscription) {
@@ -167,17 +167,17 @@ function register() {
                                   
     //  });
    
-                    registration.pushManager.subscribe({userVisibleOnly: true}).then(
-      function(pushSubscription) { console.log("ready resolved3");
+       //             registration.pushManager.subscribe({userVisibleOnly: true}).then(
+     // function(pushSubscription) { console.log("ready resolved3");
       
       //document.getElementById("register").disabled = true;
        // Keep your server in sync with the latest subscriptionId
        //sendSubscriptionToServer(pushSubscription);
       
-      }); 
-                  }       
+    //  }); 
+    //              }       
                      
-              });
+    //          });
    }
    return;
     /*else {
