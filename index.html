@@ -247,7 +247,7 @@ function sendSubscription(subscriptionObject) {
 
 function requestPushPermission() { 
 
-			if ('serviceWorker' in navigator) {
+			/* if ('serviceWorker' in navigator) {
 			console.log("ready resolved1");
 						navigator.serviceWorker.register('service-worker.js').then(function(registration) 
 						{console.log("ready resolved2");
@@ -264,7 +264,32 @@ function requestPushPermission() {
                   }       
                      
               });
+   } */
+   if ('serviceWorker' in navigator) {
+              navigator.serviceWorker.register('service-worker.js').then(function(registration) {
+                  if ('pushManager' in registration) {
+                    
+                   // registration.pushManager.getSubscription()  
+      //.then(function(pushSubscription) {
+      //                document.getElementById("register").disabled = true;
+      //              // Keep your server in sync with the latest subscriptionId
+      //               sendSubscriptionToServer(pushSubscription);
+                                  
+    //  });
+   
+                    registration.pushManager.subscribe({userVisibleOnly: true}).then(
+      function(pushSubscription) { console.log("ready resolved3");
+      
+      document.getElementById("register").disabled = true;
+       // Keep your server in sync with the latest subscriptionId
+       sendSubscriptionToServer(pushSubscription);
+      
+      }); 
+                  }       
+                     
+              });
    }
+   return;
 }
 
 function revokePushSubscription() {
@@ -364,11 +389,7 @@ window.addEventListener('load', function() {
    
 </script>
 <body>
-  
-
-
-
-    <main>
+      <main>
       <section class="button-container">
 
         <div class="button-group" id="notification-permission">
@@ -392,9 +413,7 @@ window.addEventListener('load', function() {
           <p><span>4</span>Disable push for this site</p>
           <button disabled>Revoke Push Permissions</button>
         </div>
-
       </section>
-
       <section class="error-container">
         <h1 class="title">Ooops</h1>
         <p class="message">Something went wrong</p>
