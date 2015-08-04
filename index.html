@@ -287,7 +287,7 @@ function revokePushSubscription() {
 }
 
 window.addEventListener('load', function() {
-  prepareViews();
+ // prepareViews();
 
   // Check service workers are supported
   if (!('serviceWorker' in navigator)) {
@@ -297,7 +297,7 @@ window.addEventListener('load', function() {
     return;
   }
 
-  navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
+  /* navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
     // Check if this service worker supports push
     if (!serviceWorkerRegistration.pushManager) {
       showError('Ooops Push Isn\'t Supported', 'This is most likely ' +
@@ -305,14 +305,14 @@ window.addEventListener('load', function() {
         'Try Chrome M41.');
       return;
     }
-
+ */
     // Check if we have permission for push messages already
    // serviceWorkerRegistration.pushManager.hasPermission().then(
    //   function(pushPermissionStatus) {
         // Once we have a service worker, and checked permission,
         // enable the buttons
-        var buttonContainer = document.querySelector('.button-container');
-        buttonContainer.style.display = 'block';
+    //    var buttonContainer = document.querySelector('.button-container');
+    //    buttonContainer.style.display = 'block';
 
         // If we don't have permission then set the UI accordingly
       //  if (pushPermissionStatus !== 'granted') {
@@ -322,7 +322,7 @@ window.addEventListener('load', function() {
 
         // We have permission, so let's update the subscription
         // just to be safe
-        serviceWorkerRegistration.pushManager.getSubscription().then(
+        /* serviceWorkerRegistration.pushManager.getSubscription().then(
           function(pushSubscription) {
             // Check if we have an existing pushSubscription
             if (pushSubscription) {
@@ -332,10 +332,10 @@ window.addEventListener('load', function() {
               changeState(STATE_NOTIFICATION_PERMISSION);
             }
         //  });
-      });
-  });
+      }); */
+ // });
 
-  // Register the Service Worker
+  /* // Register the Service Worker
   navigator.serviceWorker.register('service-worker.js')
     .then(function(registration) {
       // Registration worked :)
@@ -350,7 +350,7 @@ window.addEventListener('load', function() {
       showError('Ooops a Service Worker Error', 'Whilst registering the  ' +
       'service worker, something caused an error and resulting in the ' +
       'service worker not getting installed. #NeedsABugFix.');
-    });
+    }); */
 
   notificationBtn.addEventListener('click', requestNotificationPermission);
 
