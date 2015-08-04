@@ -246,19 +246,24 @@ function sendSubscription(subscriptionObject) {
 }
 
 function requestPushPermission() { 
- // navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
-    serviceWorkerRegistration.pushManager.subscribe({userVisibleOnly: true})
-      .then(function(pushSubscription) {
-       console.log('Hi');
-        sendSubscription(pushSubscription);
-      })
-      .catch(function(e) {
-        console.error('Unable to register for push', e);
-        showError('Ooops Push Couldn\'t Register', 'When we tried to ' +
-          'get the registration ID for GCM, something went wrong, not ' +
-          'sure why. Check the console to see the error.');
-   });
-//  });
+
+			if ('serviceWorker' in navigator) {
+						navigator.serviceWorker.register('service-worker.js').then(function(registration) 
+						{
+											if ('pushManager' in registration) {
+												registration.pushManager.subscribe({userVisibleOnly: true}).then(
+												function(pushSubscription) { console.log("ready resolved3");
+													sendSubscription(pushSubscription);
+											}).catch(function(e) {
+											console.error('Unable to register for push', e);
+											showError('Ooops Push Couldn\'t Register', 'When we tried to ' +
+											  'get the registration ID for GCM, something went wrong, not ' +
+											  'sure why. Check the console to see the error.');
+									   });
+                  }       
+                     
+              });
+   }
 }
 
 function revokePushSubscription() {
