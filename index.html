@@ -140,7 +140,66 @@ function requestNotificationPermission() {
   });
   
 }
-
+function register() {
+    
+  /*  if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js').then(function(registration) {
+    if ('pushManager' in registration) {
+      console.log("ready resolved2");
+    } else {
+      console.log("ready resolved3");
+    }
+  });
+} else {
+  // The browser doesn't support service workers
+  console.log("ready resolved4");
+}*/
+   
+   if ('serviceWorker' in navigator) {
+              navigator.serviceWorker.register('service-worker.js').then(function(registration) {
+                  if ('pushManager' in registration) {
+                    
+                   // registration.pushManager.getSubscription()  
+      //.then(function(pushSubscription) {
+      //                document.getElementById("register").disabled = true;
+      //              // Keep your server in sync with the latest subscriptionId
+      //               sendSubscriptionToServer(pushSubscription);
+                                  
+    //  });
+   
+                    registration.pushManager.subscribe({userVisibleOnly: true}).then(
+      function(pushSubscription) { console.log("ready resolved3");
+      
+      document.getElementById("register").disabled = true;
+       // Keep your server in sync with the latest subscriptionId
+       sendSubscriptionToServer(pushSubscription);
+      
+      }); 
+                  }       
+                     
+              });
+   }
+   return;
+    /*else {
+        console.warn('Service workers aren\'t supported in this browser.');
+        }
+        if ('serviceWorker' in navigator) {
+              navigator.serviceWorker.register('service-worker.js',{ scope: '/' }).then(function(registration) {
+                  console.log("ready resolved1");
+                if ('pushManager' in registration) {
+                  // The service worker supports push
+                    console.log("ready resolved2");
+                } else {
+                  // The service worker doesn't support push
+                    console.log("ready resolved3");
+                }
+              });
+            } else {
+              // The browser doesn't support service workers
+                console.log("ready resolved4");
+            }
+        */
+}
 function requestPushPermission() { 
 
 
@@ -174,7 +233,7 @@ function requestPushPermission() {
 window.addEventListener('load', function() {
   prepareViews();
   notificationBtn.addEventListener('click', requestNotificationPermission);
-  pushBtn.addEventListener('click', requestPushPermission);
+  pushBtn.addEventListener('click', register);
  // requestPushBtn.addEventListener('click', askServerToSendMessage);
  // revokePushBtn.addEventListener('click', revokePushSubscription);
 });  
