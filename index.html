@@ -82,7 +82,7 @@ function changeState(newState) {
   }
 
   switch (newState) {
-    case STATE_NOTIFICATION_PERMISSION:
+   /*  case STATE_NOTIFICATION_PERMISSION:
       if (Notification.permission === 'granted') {
         changeState(STATE_PUSH_PERMISSION);
         return;
@@ -102,8 +102,8 @@ function changeState(newState) {
 
       revokePushBtn.disabled = true;
       revokePushElements.classList.add('disabled');
-      break;
-    case STATE_PUSH_PERMISSION:
+      break; */
+    /* case STATE_PUSH_PERMISSION:
       notificationBtn.disabled = true;
       notificationElements.classList.add('completed');
 
@@ -118,7 +118,7 @@ function changeState(newState) {
 
       revokePushBtn.disabled = true;
       revokePushElements.classList.add('disabled');
-      break;
+      break; */
     case STATE_ALLOW_PUSH_SEND:
       notificationBtn.disabled = true;
       notificationElements.classList.add('completed');
