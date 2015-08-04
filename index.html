@@ -296,7 +296,7 @@ window.addEventListener('load', function() {
       'Make sure you are in Chrome M40 above (See chrome://version).');
     return;
   }
-
+changeState(STATE_ALLOW_PUSH_SEND);
   /* navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
     // Check if this service worker supports push
     if (!serviceWorkerRegistration.pushManager) {
