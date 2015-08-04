@@ -144,25 +144,7 @@ function requestNotificationPermission() {
 function requestPushPermission() { 
 
 
-			/* if ('serviceWorker' in navigator) {
-			console.log("ready resolved1");
-						navigator.serviceWorker.register('service-worker.js').then(function(registration) 
-						{console.log("ready resolved2");
-											if ('pushManager' in registration) {console.log("ready resolved3");
-												registration.pushManager.subscribe({userVisibleOnly: true}).then(
-												function(pushSubscription) { console.log("ready resolved4");
-													sendSubscription(pushSubscription);
-											}).catch(function(e) {
-											console.error('Unable to register for push', e);
-											showError('Ooops Push Couldn\'t Register', 'When we tried to ' +
-											  'get the registration ID for GCM, something went wrong, not ' +
-											  'sure why. Check the console to see the error.');
-									   });
-                  }       
-                     
-              });
-   } */
-   if ('serviceWorker' in navigator) {
+  if ('serviceWorker' in navigator) {
               navigator.serviceWorker.register('service-worker.js').then(function(registration) {
                   if ('pushManager' in registration) {
                     
@@ -177,7 +159,7 @@ function requestPushPermission() {
                     registration.pushManager.subscribe({userVisibleOnly: true}).then(
       function(pushSubscription) { console.log("ready resolved3");
       
-      document.getElementById("register").disabled = true;
+    //  document.getElementById("register").disabled = true;
        // Keep your server in sync with the latest subscriptionId
       // sendSubscriptionToServer(pushSubscription);
       
