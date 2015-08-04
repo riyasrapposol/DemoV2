@@ -54,8 +54,74 @@ function prepareViews() {
   pushMessageInput = requestPushElements.querySelector('.message');
 }
 
+function changeState(newState) {
+  if (newState !== STATE_NOTIFICATION_PERMISSION &&
+    Notification.permission !== 'granted') {
+    changeState(STATE_NOTIFICATION_PERMISSION);
+    return;
+  }
+
+  switch (newState) {
+     case STATE_NOTIFICATION_PERMISSION:
+      if (Notification.permission === 'granted') {
+        changeState(STATE_PUSH_PERMISSION);
+        return;
+      }
+      notificationBtn.disabled = false;
+      notificationElements.classList.remove('completed');
+      notificationElements.classList.remove('disabled');
+
+      pushBtn.disabled = true;
+      pushPermissionElements.classList.remove('completed');
+      pushPermissionElements.classList.add('disabled');
+
+      requestPushBtn.disabled = true;
+      pushTitleInput.disabled = true;
+      pushMessageInput.disabled = true;
+      requestPushElements.classList.add('disabled');
+
+      revokePushBtn.disabled = true;
+      revokePushElements.classList.add('disabled');
+      break; 
+     case STATE_PUSH_PERMISSION:
+      notificationBtn.disabled = true;
+      notificationElements.classList.add('completed');
+
+      pushBtn.disabled = false;
+      pushPermissionElements.classList.remove('completed');
+      pushPermissionElements.classList.remove('disabled');
+
+      requestPushBtn.disabled = true;
+      pushTitleInput.disabled = true;
+      pushMessageInput.disabled = true;
+      requestPushElements.classList.add('disabled');
+
+      revokePushBtn.disabled = true;
+      revokePushElements.classList.add('disabled');
+      break; 
+    case STATE_ALLOW_PUSH_SEND:
+      notificationBtn.disabled = true;
+      notificationElements.classList.add('completed');
+
+      pushBtn.disabled = false;
+      //pushPermissionElements.classList.add('completed');
+      //pushPermissionElements.classList.remove('disabled');
+
+      requestPushBtn.disabled = false;
+      pushTitleInput.disabled = false;
+      pushMessageInput.disabled = false;
+     // requestPushElements.classList.remove('disabled');
+
+      revokePushBtn.disabled = false;
+      //revokePushElements.classList.remove('disabled');
+      break;
+  }
+
+  currentState = newState;
+}
+
 function requestNotificationPermission() {
- 
+ alert();
   console.log('Permission wasn\'t granted. Allow a retry.');
 }
 window.addEventListener('load', function() {
