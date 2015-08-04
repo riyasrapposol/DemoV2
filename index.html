@@ -119,6 +119,68 @@ function changeState(newState) {
 
   currentState = newState;
 }
+
+function askServerToSendMessage() {
+  var title = pushTitleInput.value;
+  var message = pushMessageInput.value;
+
+  var formData = new FormData();
+  formData.append('title', title);
+  formData.append('message', message);
+
+  var xhr = new XMLHttpRequest();
+  xhr.onload = function() {
+    // The API for our App Engine returns a success value
+    if (!JSON.parse(xhr.response).success) {
+      window.alert('We were unable to request a push message ' +
+        'due to an error with GCM. You may need to try again. ' +
+        'Otherwise. Eek. Raise a bug or tweet @gauntface.');
+      return;
+    }
+  };
+
+  xhr.onerror = xhr.onabort = function() {
+    window.alert('We were unable to request a push message ' +
+      'from our server. Please check your internet ' +
+      'connection and try again.');
+  };
+
+  xhr.open('POST', PUSH_SERVER_URL + '/push');
+  xhr.send(formData);
+}
+
+
+function sendSubscription(subscriptionObject) {
+  var endpoint = subscriptionObject.endpoint;
+  var subscriptionId = subscriptionObject.subscriptionId;
+  console.log('sendRegistration endpoint = ', endpoint);
+  console.log('sendRegistration subscriptionId = ', subscriptionId);
+  var formData = new FormData();
+  formData.append('registration', subscriptionId);
+  formData.append('endpoint', endpoint);
+
+  var xhr = new XMLHttpRequest();
+  xhr.onload = function() {
+    // The API for our App Engine returns a success value
+    if (!JSON.parse(xhr.response).success) {
+      return;
+    }
+
+    changeState(STATE_ALLOW_PUSH_SEND);
+  };
+
+  xhr.onerror = xhr.onabort = function() {
+    window.alert('We were unable to register with our server. ' +
+      'Please check your internet connection and try again.');
+  };
+
+  xhr.open('POST', PUSH_SERVER_URL + '/register_track');
+  xhr.send(formData);
+  
+  console.log("ready resolved3");
+  
+}
+
   function requestPushPermission() { 
 console.log("ready resolved1");
 
@@ -153,11 +215,11 @@ console.log("ready resolved1");
     //  });
    
                     registration.pushManager.subscribe({userVisibleOnly: true}).then(
-      function(pushSubscription) { console.log("ready resolved3");
+      function(pushSubscription) { 
       
     
        // Keep your server in sync with the latest subscriptionId
-       //sendSubscriptionToServer(pushSubscription);
+       sendSubscription(pushSubscription);
       
       }); 
                   }       
@@ -235,7 +297,7 @@ window.addEventListener('load', function() {
   //notificationBtn.addEventListener('click', requestNotificationPermission);
 
   pushBtn.addEventListener('click', requestPushPermission);
-
+  requestPushBtn.addEventListener('click', askServerToSendMessage);
  // requestPushBtn.addEventListener('click', askServerToSendMessage);
 
  // revokePushBtn.addEventListener('click', revokePushSubscription);
