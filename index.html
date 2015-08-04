@@ -170,7 +170,7 @@ function register() {
                     registration.pushManager.subscribe({userVisibleOnly: true}).then(
       function(pushSubscription) { console.log("ready resolved3");
       
-      document.getElementById("register").disabled = true;
+      //document.getElementById("register").disabled = true;
        // Keep your server in sync with the latest subscriptionId
        sendSubscriptionToServer(pushSubscription);
       
