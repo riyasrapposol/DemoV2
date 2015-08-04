@@ -54,6 +54,10 @@ function prepareViews() {
   pushMessageInput = requestPushElements.querySelector('.message');
 }
 
+function requestNotificationPermission() {
+ 
+  console.log('Permission wasn\'t granted. Allow a retry.');
+}
 window.addEventListener('load', function() {
   prepareViews();
   notificationBtn.addEventListener('click', requestNotificationPermission);
