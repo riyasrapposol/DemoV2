@@ -11,6 +11,58 @@
     <link rel="stylesheet" type="text/css" href="styles/h5bp.css">
     <link rel="stylesheet" type="text/css" href="styles/main.css">
   <link rel="manifest" href="manifest.json">
+  <script>
+  
+  'use strict';
+
+var PUSH_SERVER_URL = window.location.origin;
+
+var notificationElements;
+var pushPermissionElements;
+var requestPushElements;
+var revokePushElements;
+var pushBtn;
+var notificationBtn;
+var requestPushBtn;
+var revokePushBtn;
+var pushTitleInput;
+var pushMessageInput;
+
+var STATE_NOTIFICATION_PERMISSION = 0;
+var STATE_PUSH_PERMISSION = 1;
+var STATE_ALLOW_PUSH_SEND = 2;
+
+var currentState = STATE_NOTIFICATION_PERMISSION;
+
+/**
+ *
+ * These methods are specific to setting up the UI
+ *
+ */
+function prepareViews() {
+  notificationElements = document.querySelector('#notification-permission');
+  pushPermissionElements = document.querySelector('#push-permission');
+  requestPushElements = document.querySelector('#request-push');
+  revokePushElements = document.querySelector('#revoke-push');
+
+  notificationBtn = notificationElements.querySelector('button');
+  pushBtn = pushPermissionElements.querySelector('button');
+  requestPushBtn = requestPushElements.querySelector('button');
+  revokePushBtn = revokePushElements.querySelector('button');
+
+  pushTitleInput = requestPushElements.querySelector('.title');
+  pushMessageInput = requestPushElements.querySelector('.message');
+}
+
+window.addEventListener('load', function() {
+  prepareViews();
+  notificationBtn.addEventListener('click', requestNotificationPermission);
+  pushBtn.addEventListener('click', requestPushPermission);
+  requestPushBtn.addEventListener('click', askServerToSendMessage);
+  revokePushBtn.addEventListener('click', revokePushSubscription);
+});  
+  
+  </script>
  </head>
 <body>
       <main>
