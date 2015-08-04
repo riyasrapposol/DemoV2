@@ -203,9 +203,9 @@ function register() {
 function requestPushPermission() { 
 
 alert(1);
-  if ('serviceWorker' in navigator) {
-              navigator.serviceWorker.register('service-worker.js').then(function(registration) {
-                  if ('pushManager' in registration) {
+  //if ('serviceWorker' in navigator) {
+   //           navigator.serviceWorker.register('service-worker.js').then(function(registration) {
+  //                if ('pushManager' in registration) {
                     
                    // registration.pushManager.getSubscription()  
       //.then(function(pushSubscription) {
@@ -215,7 +215,7 @@ alert(1);
                                   
     //  });
    
-                    registration.pushManager.subscribe({userVisibleOnly: true});
+    //                registration.pushManager.subscribe({userVisibleOnly: true});
       //function(pushSubscription) { console.log("ready resolved3");
       
     //  document.getElementById("register").disabled = true;
@@ -223,10 +223,10 @@ alert(1);
       // sendSubscriptionToServer(pushSubscription);
       
      // }); 
-                  }       
-                     
-              });
-   }
+ //                 }       
+ //                    
+ //             });
+ //  }
    return;
 }
 
