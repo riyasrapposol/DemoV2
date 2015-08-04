@@ -1,6 +1,6 @@
 'use strict';
 
-self.addEventListener('install', function(e) {
+/* self.addEventListener('install', function(e) {
   console.log('oninstall');
 });
 
@@ -10,7 +10,7 @@ self.addEventListener('activate', function(e) {
 
 self.addEventListener('fetch', function(e) {
   console.log('onfetch:', e);
-});
+}); */
 
 self.addEventListener('push', function(e) {
   console.log('Push Event Received');
