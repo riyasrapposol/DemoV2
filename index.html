@@ -287,16 +287,16 @@ function revokePushSubscription() {
 }
 
 window.addEventListener('load', function() {
-  prepareViews();
+	prepareViews();
 
-  // Check service workers are supported
-  if (!('serviceWorker' in navigator)) {
-    showError('Ooops No Service Worker found', 'This is most likely down ' +
-      'to the site being run in a browser without service worker support. ' +
-      'Make sure you are in Chrome M40 above (See chrome://version).');
-    return;
-  }
-changeState(STATE_ALLOW_PUSH_SEND);
+	  // Check service workers are supported
+	  if (!('serviceWorker' in navigator)) {
+		showError('Ooops No Service Worker found', 'This is most likely down ' +
+		  'to the site being run in a browser without service worker support. ' +
+		  'Make sure you are in Chrome M40 above (See chrome://version).');
+		return;
+	  }
+	changeState(STATE_ALLOW_PUSH_SEND);
   /* navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
     // Check if this service worker supports push
     if (!serviceWorkerRegistration.pushManager) {
@@ -311,8 +311,8 @@ changeState(STATE_ALLOW_PUSH_SEND);
    //   function(pushPermissionStatus) {
         // Once we have a service worker, and checked permission,
         // enable the buttons
-    //    var buttonContainer = document.querySelector('.button-container');
-    //    buttonContainer.style.display = 'block';
+        var buttonContainer = document.querySelector('.button-container');
+       buttonContainer.style.display = 'block';
 
         // If we don't have permission then set the UI accordingly
       //  if (pushPermissionStatus !== 'granted') {
