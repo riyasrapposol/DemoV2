@@ -248,11 +248,12 @@ function sendSubscription(subscriptionObject) {
 function requestPushPermission() { 
 
 			if ('serviceWorker' in navigator) {
+			console.log("ready resolved1");
 						navigator.serviceWorker.register('service-worker.js').then(function(registration) 
-						{
-											if ('pushManager' in registration) {
+						{console.log("ready resolved2");
+											if ('pushManager' in registration) {console.log("ready resolved3");
 												registration.pushManager.subscribe({userVisibleOnly: true}).then(
-												function(pushSubscription) { console.log("ready resolved3");
+												function(pushSubscription) { console.log("ready resolved4");
 													sendSubscription(pushSubscription);
 											}).catch(function(e) {
 											console.error('Unable to register for push', e);
