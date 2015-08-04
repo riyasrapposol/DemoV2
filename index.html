@@ -124,16 +124,16 @@ function changeState(newState) {
       notificationElements.classList.add('completed');
 
       pushBtn.disabled = false;
-      pushPermissionElements.classList.add('completed');
-      pushPermissionElements.classList.remove('disabled');
+      //pushPermissionElements.classList.add('completed');
+      //pushPermissionElements.classList.remove('disabled');
 
       requestPushBtn.disabled = false;
       pushTitleInput.disabled = false;
       pushMessageInput.disabled = false;
-      requestPushElements.classList.remove('disabled');
+     // requestPushElements.classList.remove('disabled');
 
       revokePushBtn.disabled = false;
-      revokePushElements.classList.remove('disabled');
+      //revokePushElements.classList.remove('disabled');
       break;
   }
 
@@ -337,7 +337,8 @@ window.addEventListener('load', function() {
         // Once we have a service worker, and checked permission,
         // enable the buttons
         var buttonContainer = document.querySelector('.button-container');
-       
+       buttonContainer.style.display = 'block';
+
         // If we don't have permission then set the UI accordingly
       //  if (pushPermissionStatus !== 'granted') {
       //    changeState(STATE_NOTIFICATION_PERMISSION);
