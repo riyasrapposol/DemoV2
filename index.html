@@ -147,9 +147,15 @@ function askServerToSendMessage() {
       'from our server. Please check your internet ' +
       'connection and try again.');
   };
-
-  xhr.open('POST', PUSH_SERVER_URL + '/push');
-  xhr.send(formData);
+xhr.setRequestHeader('Authorization', 'key=AIzaSyD4NWqPk299BYMFnfBeh_unQQyX0YheXuE' );
+//xhr.setRequestHeader('Accept-Language', 'en_US');
+xhr.setRequestHeader("Content-type","application/json");
+xhr.open("POST","https://android.googleapis.com/gcm/send",true);
+xhr.send("{\"registration_ids\":[\"APA91bFXvq_KEl6nU_0J7Wn0RLhk0zvgPB5d1EsYeRu8DNc1Nn0o_EeiLsknysWY0zTCwqWJUnRHMho7KtdHjB_z4ehRqdjPDUr3xHRlHsorFg-97r6E0FticqHyUtyXwuBrIR4iHWRab0ZKHNoq0vPs8bTN9YuKS4ECQQEOe5rUgvaVFjMoKhVeJbEze5UaKDMP8veB-VGM\"]}");
+  
+  
+  //xhr.open('POST', PUSH_SERVER_URL + '/push');
+  //xhr.send(formData);
 }
 
 
