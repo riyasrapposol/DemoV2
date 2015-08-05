@@ -164,11 +164,11 @@ function sendSubscription(subscriptionObject) {
 
   var xhr = new XMLHttpRequest();
   
-var xhr = new XMLHttpRequest();
-   xhr.overrideMimeType("application/json");
+  var xhr = new XMLHttpRequest();
+  xhr.overrideMimeType("application/json");
   xhr.onload = function() {
-    // The API for our App Engine returns a success value
-	if (('' + xhr.status)[0] != '2') {
+  // The API for our App Engine returns a success value
+  if (('' + xhr.status)[0] != '2') {
                     window.alert('We were unable to request a push message ' +
         'due to an error with GCM. You may need to try again. ' +
         'Otherwise. Eek. Raise a bug or tweet @gauntface.');
@@ -182,7 +182,8 @@ var xhr = new XMLHttpRequest();
     window.alert('We were unable to register with our server. ' +
       'Please check your internet connection and try again.');
   };
-
+   console.log(PUSH_SERVER_URL);
+	
   xhr.open('POST', PUSH_SERVER_URL + '/register_track');
   xhr.send(formData);
   
